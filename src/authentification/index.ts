@@ -1,5 +1,5 @@
 import fastify from 'fastify'
-import userRouter from './authentification/routes/user.router'
+import userRouter from './routes/user.router'
 
 const port = 5000;
 

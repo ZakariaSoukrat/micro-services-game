@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify"
-import { IUser } from "interfaces"
+import { IUser } from "authentification/interfaces"
 
 const staticUsers: IUser[] = [
   {
