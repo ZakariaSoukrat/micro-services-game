@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fastify_1 = __importDefault(require("fastify"));
-const user_router_1 = __importDefault(require("./routes/user.router"));
+const user_router_1 = __importDefault(require("./authentification/routes/user.router"));
 const port = 5000;
 const startServer = async () => {
     try {
