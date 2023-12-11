@@ -1,27 +1,39 @@
-import fastify from 'fastify'
-import userRouter from './routes/user.router'
+import { MongoClient } from 'mongodb';
 
-const port = 5000;
+const express = require('express');
+const body = require('body-parser');
 
-const startServer = async () => {
+async function start() {
   try {
-	const server = fastify()
 
-	const errorHandler = (error, address) => {
-  	server.log.error(error, address);
-	}
+    const app = express();
 
-	server.register(userRouter, { prefix: '/user' })
+    const mongo = await MongoClient.connect('mongodb+srv://Game_api:sI3vG3fOUjwDltxr@game.yik52gz.mongodb.net/Yu-gi-oh');
 
-	await server.listen({ port }, errorHandler)
-  } catch (e) {
-	console.error(e)
+    await mongo.connect();
+
+    app.db = mongo.db();
+
+    // body parser
+
+    app.use(body.json({
+      limit: '500kb'
+    }));
+
+    // Routes
+
+    app.use('/customers', require('./routes/customers'));
+
+    // Start server
+
+    app.listen(3000, () => {
+      console.log('Server is running on port 3000');
+    });
+
+  }
+  catch(error) {
+    console.log(error);
   }
 }
 
-process.on('unhandledRejection', (e) => {
-  console.error(e)
-  process.exit(1)
-})
-
-startServer()
+start();
