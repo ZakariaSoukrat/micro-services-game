@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "ts-node-dev ./src/index.ts",
-    "start": "node build/index.js"
+    "start": "node build/authentification/src/index.js"
   },
   "keywords": [],
   "author": "",

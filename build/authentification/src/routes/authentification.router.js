@@ -4,6 +4,6 @@ const authentification_controller_1 = require("../controllers/authentification.c
 const express = require('express');
 const router = express.Router();
 console.log('customers route');
-router.post('/authentification', authentification_controller_1.createCustomerController);
+router.post('/', authentification_controller_1.createCustomerController);
 module.exports = router;
 //# sourceMappingURL=authentification.router.js.map
