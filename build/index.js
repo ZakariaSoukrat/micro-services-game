@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fastify_1 = __importDefault(require("fastify"));
-const user_router_1 = __importDefault(require("./authentification/routes/user.router"));
+const authentification_router_1 = __importDefault(require("./authentification/src/routes/authentification.router"));
 const port = 5000;
 const startServer = async () => {
     try {
@@ -12,7 +12,7 @@ const startServer = async () => {
         const errorHandler = (error, address) => {
             server.log.error(error, address);
         };
-        server.register(user_router_1.default, { prefix: '/user' });
+        server.register(authentification_router_1.default, { prefix: '/authentification' });
         await server.listen({ port }, errorHandler);
     }
     catch (e) {

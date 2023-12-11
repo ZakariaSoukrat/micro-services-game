@@ -22,7 +22,7 @@ async function start() {
 
     // Routes
 
-    app.use('/customers', require('./routes/customers'));
+    app.use('/authentification', require('./routes/authentification.router'));
 
     // Start server
 
