@@ -28,9 +28,12 @@ async function createUser(req, res) {
                 return res.status(400).json({ message: 'player already exists' });
             }
             const result = await db.collection('player').insertOne({
-                username,
+                username: username,
                 email: email.toLowerCase(),
-                pw
+                pw: pw,
+                requests: [],
+                coins: 0,
+                status: "offline"
             });
             if (result.acknowledged) {
                 res.status(200).json({ message: 'Customer created' });
@@ -100,10 +103,7 @@ async function login(req, res) {
             return res.status(400).json({ message: 'email should be in the format : name@rule.com' });
         }
         if (match[1] == "player") {
-            const result = await db.collection('player').findOne({
-                email: email.toLowerCase(),
-                pw: pw
-            });
+            const result = await db.collection('player').findOneAndUpdate({ email: email, pw: pw }, { $set: { status: "onLine" } });
             if (result) {
                 req.session.email = email; // 
                 res.status(200).json({ message: 'player connected' });
