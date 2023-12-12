@@ -1,4 +1,5 @@
 import { MongoClient } from 'mongodb';
+import 'dotenv/config';
 
 const express = require('express');
 const body = require('body-parser');

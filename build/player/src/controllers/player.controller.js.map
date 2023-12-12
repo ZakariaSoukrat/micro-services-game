@@ -1,0 +1,1 @@
+{"version":3,"file":"player.controller.js","sourceRoot":"","sources":["../../../../player/src/controllers/player.controller.ts"],"names":[],"mappings":";;;;;;AAAA,0EAA6C;AAC7C,MAAM,cAAc,GAAG,2BAAY,CAAC,cAAc,CAAC;AAInD,KAAK,UAAU,YAAY;IACtB,MAAM,iBAAiB,GAAG,IAAI,CAAC,KAAK,CAAC,cAAc,CAAC,OAAO,CAAC,aAAa,CAAC,CAAC,CAAC;IAC5E,OAAO,iBAAiB,CAAA;AAE7B,CAAC;AANO,oCAAY"}

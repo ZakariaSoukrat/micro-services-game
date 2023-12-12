@@ -1,0 +1,1 @@
+{"version":3,"file":"player.router.js","sourceRoot":"","sources":["../../../../player/src/routes/player.router.ts"],"names":[],"mappings":";;AAAA,wEAAgE;AAGhE,MAAM,OAAO,GAAI,OAAO,CAAC,SAAS,CAAC,CAAC;AAEpC,MAAM,MAAM,GAAG,OAAO,CAAC,MAAM,EAAE,CAAC;AAEhC,OAAO,CAAC,GAAG,CAAC,cAAc,CAAC,CAAC;AAG5B,MAAM,CAAC,IAAI,CAAC,SAAS,EAAC,gCAAY,CAAE,CAAC;AAIrC,MAAM,CAAC,OAAO,GAAG,MAAM,CAAC"}

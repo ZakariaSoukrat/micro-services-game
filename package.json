@@ -18,8 +18,12 @@
   "description": "",
   "dependencies": {
     "@types/mongodb": "^4.0.7",
+    "dotenv": "^16.3.1",
     "falsify": "^1.0.1",
     "fastify": "^4.24.3",
-    "mongodb": "^6.3.0"
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.3.0",
+    "node-localstorage": "^3.0.5",
+    "react": "^18.2.0"
   }
 }

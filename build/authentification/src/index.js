@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongodb_1 = require("mongodb");
+require("dotenv/config");
 const express = require('express');
 const body = require('body-parser');
 async function start() {
