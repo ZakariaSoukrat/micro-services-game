@@ -41,6 +41,15 @@ async function start() {
       limit: '500kb'
     }));
 
+    app.get('/logout', (req, res) => {
+      app.db.collection('player').findOneAndUpdate({ email: req.session.email}, { $set: { status: "offline" } });
+      req.session.destroy(err => {
+        if (err) {
+          return res.status(500).send('Could not log out');
+        }
+        res.send('Logout successful');
+      })
+    });
     // Routes
 
     app.use('/authentification', require('./routes/authentification.router'));
