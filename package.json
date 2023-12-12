@@ -6,7 +6,9 @@
     "build": "tsc",
     "dev": "ts-node-dev ./src/index.ts",
     "start_player": "node build/player/src/index.js",
-    "start_auth": "node build/authentification/src/index.js"
+    "start_auth": "node build/authentification/src/index.js",
+    "start_match": "node build/match/src/index.js"
+
   },
   "keywords": [],
   "author": "",
