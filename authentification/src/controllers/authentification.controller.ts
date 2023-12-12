@@ -1,8 +1,5 @@
 
-import jwt from "jsonwebtoken";
-import * as dotenv from "dotenv";
-dotenv.config();
-const JWT_SECRET_KEY = process.env.JWT_SECRET;
+
 export {createUser ,login}
   async function createUser(req: any, res: any) {
 	try {
@@ -131,15 +128,8 @@ export {createUser ,login}
 		   });
 		  if (result) {
 		
-				// Perform localStorage action
-				const token = jwt.sign(
-					{ email: result.email },
-					process.env.JWT_SECRET,
-					{
-					  expiresIn: "1h",
-					}
-				  );
-				console.log(token)
+			req.session.email = email// 
+				
 			
 			
 			res.status(200).json({ message: 'player connected' });
@@ -157,6 +147,7 @@ export {createUser ,login}
              pw
 		   });
 		  if (result) {
+			req.session.email = email
 			res.status(200).json({ message: 'admin found' });
 		  } else {
 			throw new Error('admin not found');
@@ -169,6 +160,7 @@ export {createUser ,login}
              pw
 		   });
 		  if (result) {
+			req.session.email = email
 			res.status(200).json({ message: 'reporter found' });
 		  } else {
 			throw new Error('reporter not found');

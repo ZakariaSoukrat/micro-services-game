@@ -1,14 +1,15 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.verifyPlayer = void 0;
-const node_localstorage_1 = __importDefault(require("node-localstorage"));
-const sessionStorage = node_localstorage_1.default.sessionStorage;
-async function verifyPlayer() {
-    const storedSessionData = JSON.parse(sessionStorage.getItem('sessionData'));
-    return storedSessionData;
+exports.isAuthenticated = void 0;
+async function isAuthenticated(req, res) {
+    console.log(req.session);
+    console.log(req.session.email);
+    if (req.session && req.session.email) {
+        res.status(200).send('User is authenticated');
+    }
+    else {
+        res.status(401).send('User is not authenticated');
+    }
 }
-exports.verifyPlayer = verifyPlayer;
+exports.isAuthenticated = isAuthenticated;
 //# sourceMappingURL=player.controller.js.map

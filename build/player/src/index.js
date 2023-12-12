@@ -1,7 +1,12 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongodb_1 = require("mongodb");
-require("dotenv/config");
+const express_session_1 = __importDefault(require("express-session"));
+const connect_mongodb_session_1 = __importDefault(require("connect-mongodb-session"));
+const MongoDBStore = (0, connect_mongodb_session_1.default)(express_session_1.default);
 const express = require('express');
 const body = require('body-parser');
 async function start() {
@@ -11,6 +16,22 @@ async function start() {
         await mongo.connect();
         app.db = mongo.db();
         // body parser
+        const store = new MongoDBStore({
+            uri: 'mongodb+srv://Game_api:sI3vG3fOUjwDltxr@game.yik52gz.mongodb.net',
+            databaseName: 'Yu-gi-oh',
+            collection: 'sessions',
+        });
+        store.on('error', (error) => {
+            console.error(error);
+        });
+        // Session configuration
+        app.use((0, express_session_1.default)({
+            secret: 'yourSecretKey',
+            resave: false,
+            saveUninitialized: true,
+            store: store,
+            cookie: { secure: false } // Use true in production with HTTPS
+        }));
         app.use(body.json({
             limit: '500kb'
         }));
