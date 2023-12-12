@@ -1,14 +1,14 @@
-import { verifyPlayer } from "../controllers/player.controller";
+import {isAuthenticated} from "../controllers/player.controller";
 
 
 const express  = require('express');
 
 const router = express.Router();
 
-console.log('player route');
+console.log('customers route');
 
 
-router.post('/verify',verifyPlayer );
+router.get('/verify', isAuthenticated);
 
 
 

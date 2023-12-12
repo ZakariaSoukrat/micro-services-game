@@ -1,11 +1,12 @@
-import localStorage from 'node-localstorage';
-const sessionStorage = localStorage.sessionStorage;
+async function isAuthenticated(req, res) {
+     console.log(req.session);
+     console.log(req.session.email);
+     if (req.session && req.session.email) {
+       res.status(200).send('User is authenticated');
 
-export {verifyPlayer}
+     } else {
+       res.status(401).send('User is not authenticated');
+     }
+   }
 
-async function verifyPlayer(){
-     const storedSessionData = JSON.parse(sessionStorage.getItem('sessionData'));
-     return storedSessionData 
-
-}
-  
+   export{isAuthenticated}
