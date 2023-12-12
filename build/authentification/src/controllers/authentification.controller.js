@@ -33,7 +33,21 @@ async function createUser(req, res) {
                 pw: pw,
                 requests: [],
                 coins: 0,
-                status: "offline"
+                status: "offline",
+                creatures: [
+                    { name: 'Utopia', attack: 10, defense: 4, stamina: 7, price: 10 },
+                    {
+                        name: 'Shadowstrike',
+                        attack: 11,
+                        defense: 3,
+                        stamina: 2,
+                        price: 7
+                    },
+                    { name: 'Thunderclaw', attack: 10, defense: 4, stamina: 7, price: 8 },
+                    { name: 'Blaze', attack: 20, defense: 4, stamina: 7, price: 20 },
+                    { name: 'Gardien', attack: 10, defense: 4, stamina: 7, price: 10 },
+                    { name: 'Serpent', attack: 10, defense: 4, stamina: 7, price: 8 }
+                ]
             });
             if (result.acknowledged) {
                 res.status(200).json({ message: 'Customer created' });
@@ -105,7 +119,7 @@ async function login(req, res) {
         if (match[1] == "player") {
             const result = await db.collection('player').findOneAndUpdate({ email: email, pw: pw }, { $set: { status: "onLine" } });
             if (result) {
-                req.session.email = email; // 
+                req.session.email = email; //
                 res.status(200).json({ message: 'player connected' });
             }
             else {
@@ -113,7 +127,6 @@ async function login(req, res) {
             }
         }
         const result1 = await db.collection('admin').find().toArray();
-        console.log(result1);
         if (match[1] == "admin") {
             const result = await db.collection('admin').findOne({
                 email: email.toLowerCase(),

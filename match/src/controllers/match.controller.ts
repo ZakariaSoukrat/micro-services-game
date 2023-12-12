@@ -1,3 +1,5 @@
+import axios, { AxiosResponse } from 'axios';
+
 interface Creature {
     name: string;
     attack: number;
@@ -21,14 +23,13 @@ const Blaze = createCreature("Blaze",20,4,7,20)
 const Gardien = createCreature("Gardien",10,4,7,10)
 const Serpent = createCreature("Serpent",10,4,7,8)
 const ListCreatures = [Utopia,Shadowstrike,Thunderclaw,Blaze,Gardien,Serpent]
-
 function calculateScore(creature: Creature): number {
     return creature.attack ** 2 + creature.defense * creature.stamina;
 }
 
 function playRound(playerCreature: Creature, botCreatures: Creature[]): Creature {
     let winningCreature = botCreatures[0]; // Assuming the first bot initially wins
-
+    console.log(playerCreature)
     const playerScore = calculateScore(playerCreature);
 
     // Calculate scores for each bot and find the highest scoring bot
@@ -53,33 +54,45 @@ function getRandomElement<T>(list: T[]): T {
     return list[randomIndex];
 }
 
+function getCreatureByName(name: string): Creature | null {
+    const foundCreature = ListCreatures.find(creature => creature.name === name);
+    return foundCreature || null;
+}
+
 async function playMatch(req: any, res: any) {
+    console.log(ListCreatures)
+    const {cr1, cr2, cr3,cr4,cr5} = req.body;
+    if (!cr1 || !cr2 || !cr3 || !cr4 || !cr5) {
+        return res.status(400).json({ message: '5 Creatures are required' });
+        }
     const { db } = req.app
-    const playerCreature : Creature = Utopia
+    const playerCreature = [getCreatureByName(cr1),getCreatureByName(cr2),getCreatureByName(cr3),getCreatureByName(cr4),getCreatureByName(cr5)]
+    console.log(playerCreature)
     var match ={}
     match['date']=Date()
     const rounds = 5;
     let playerWins = 0;
 
     for (let i = 1; i <=rounds; i++) {
-        const roundWinner = playRound(playerCreature, [getRandomElement(ListCreatures),getRandomElement(ListCreatures),getRandomElement(ListCreatures),getRandomElement(ListCreatures)]);
+        const roundWinner = playRound(playerCreature[i-1], [getRandomElement(ListCreatures),getRandomElement(ListCreatures),getRandomElement(ListCreatures),getRandomElement(ListCreatures)]);
         let round = "round" + i;
         match[round]={}
-         if(roundWinner == playerCreature){
-            match[round]["winner"] = "playerName"
+         if(roundWinner == playerCreature[i]){
+            match[round]["winner"] = "Aymane"
          }
          else{
             match[round]["winner"] = "Bots"
          }
          match[round]['Creature']=roundWinner
         // Check if the player won the round
-        if (roundWinner === playerCreature) {
+        if (roundWinner === playerCreature[i]) {
             playerWins++;
             addCoins()
         }
     }
     if(playerWins >= 3){
         match["result"] = "Win"
+        addCoins()
     }
     else{
         match["result"] = "Lose"
@@ -92,12 +105,28 @@ async function playMatch(req: any, res: any) {
       }
 }
 
-function addCoins(){}
+function addCoins(){
+    axios.post('http://localhost:3001/player/add_coins', {})
+    .then((response: AxiosResponse) => {
+        console.log('Creature created:', response.data);
+    })
+    .catch((error: any) => {
+        console.error('Error creating creature:', error);
+    });
+}
 
-async function getMatches(req: any, res: any){
+async function getAllMatches(req: any, res: any){
     const { db } = req.app
-   const result = await db.collection('match').find()
+   const result = await db.collection('match').find({}).toArray()
+   console.log(result)
    return res.status(200).json(result)
 }
 
-export{playMatch,getMatches}
+async function getLastMatches(req: any, res: any){
+    const { db } = req.app
+   const result = await db.collection('match').find({}).sort({ _id: -1 }).limit(1).toArray();
+   console.log(typeof result)
+   return res.status(200).json(result)
+}
+
+export{playMatch,getAllMatches,getLastMatches}

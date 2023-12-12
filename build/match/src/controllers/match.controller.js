@@ -1,6 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMatches = exports.playMatch = void 0;
+exports.getLastMatches = exports.getAllMatches = exports.playMatch = void 0;
+const axios_1 = __importDefault(require("axios"));
 function createCreature(name, attack, defense, stamina, price) {
     return {
         name,
@@ -22,6 +26,7 @@ function calculateScore(creature) {
 }
 function playRound(playerCreature, botCreatures) {
     let winningCreature = botCreatures[0]; // Assuming the first bot initially wins
+    console.log(playerCreature);
     const playerScore = calculateScore(playerCreature);
     // Calculate scores for each bot and find the highest scoring bot
     let highestBotScore = calculateScore(botCreatures[0]);
@@ -42,32 +47,43 @@ function getRandomElement(list) {
     const randomIndex = Math.floor(Math.random() * list.length);
     return list[randomIndex];
 }
+function getCreatureByName(name) {
+    const foundCreature = ListCreatures.find(creature => creature.name === name);
+    return foundCreature || null;
+}
 async function playMatch(req, res) {
+    console.log(ListCreatures);
+    const { cr1, cr2, cr3, cr4, cr5 } = req.body;
+    if (!cr1 || !cr2 || !cr3 || !cr4 || !cr5) {
+        return res.status(400).json({ message: '5 Creatures are required' });
+    }
     const { db } = req.app;
-    const playerCreature = Utopia;
+    const playerCreature = [getCreatureByName(cr1), getCreatureByName(cr2), getCreatureByName(cr3), getCreatureByName(cr4), getCreatureByName(cr5)];
+    console.log(playerCreature);
     var match = {};
     match['date'] = Date();
     const rounds = 5;
     let playerWins = 0;
     for (let i = 1; i <= rounds; i++) {
-        const roundWinner = playRound(playerCreature, [getRandomElement(ListCreatures), getRandomElement(ListCreatures), getRandomElement(ListCreatures), getRandomElement(ListCreatures)]);
+        const roundWinner = playRound(playerCreature[i - 1], [getRandomElement(ListCreatures), getRandomElement(ListCreatures), getRandomElement(ListCreatures), getRandomElement(ListCreatures)]);
         let round = "round" + i;
         match[round] = {};
-        if (roundWinner == playerCreature) {
-            match[round]["winner"] = "playerName";
+        if (roundWinner == playerCreature[i]) {
+            match[round]["winner"] = "Aymane";
         }
         else {
             match[round]["winner"] = "Bots";
         }
         match[round]['Creature'] = roundWinner;
         // Check if the player won the round
-        if (roundWinner === playerCreature) {
+        if (roundWinner === playerCreature[i]) {
             playerWins++;
             addCoins();
         }
     }
     if (playerWins >= 3) {
         match["result"] = "Win";
+        addCoins();
     }
     else {
         match["result"] = "Lose";
@@ -81,11 +97,27 @@ async function playMatch(req, res) {
     }
 }
 exports.playMatch = playMatch;
-function addCoins() { }
-async function getMatches(req, res) {
+function addCoins() {
+    axios_1.default.post('http://localhost:3001/player/add_coins', {})
+        .then((response) => {
+        console.log('Creature created:', response.data);
+    })
+        .catch((error) => {
+        console.error('Error creating creature:', error);
+    });
+}
+async function getAllMatches(req, res) {
     const { db } = req.app;
-    const result = await db.collection('match').find();
+    const result = await db.collection('match').find({}).toArray();
+    console.log(result);
     return res.status(200).json(result);
 }
-exports.getMatches = getMatches;
+exports.getAllMatches = getAllMatches;
+async function getLastMatches(req, res) {
+    const { db } = req.app;
+    const result = await db.collection('match').find({}).sort({ _id: -1 }).limit(1).toArray();
+    console.log(typeof result);
+    return res.status(200).json(result);
+}
+exports.getLastMatches = getLastMatches;
 //# sourceMappingURL=match.controller.js.map

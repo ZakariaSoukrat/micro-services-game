@@ -11,7 +11,14 @@ res.status(401).send('User is not authenticated');
 }
 }
 
-
+async function getPlayer(req, res){
+  const { db } = req.app;
+  const email = req.session.email
+  const existingPlayer = await db.collection('player').findOne({
+  email: email.toLowerCase()
+    });
+  return  res.status(200).json(existingPlayer);
+}
 
 async function getCoins(req, res){
 
@@ -21,7 +28,7 @@ const email = req.session.email
 const existingPlayer = await db.collection('player').findOne({
 email: email.toLowerCase()
 });
-return res.status(400).json({ Coins: existingPlayer.coins });
+return res.status(200).json({ Coins: existingPlayer.coins });
 
 }
 else (res.status(401).send('User is not authenticated'))
@@ -43,17 +50,18 @@ else (res.status(401).send('User is not authenticated'))
 }
 
 async function getCreatures(req, res){
-
 const { db } = req.app;
 if (req.session && req.session.email) {
 const email = req.session.email
 const existingPlayer = await db.collection('player').findOne({
 email: email.toLowerCase()
 });
-return res.status(400).json({ Creatures: existingPlayer.creatures });
+return res.status(200).json({ Creatures: existingPlayer.creatures });
 
 }
 else (res.status(401).send('User is not authenticated'))
 }
 
-export{isAuthenticated, getCoins, addCoins, getCreatures}
+
+
+export{isAuthenticated, getCoins, addCoins, getCreatures,getPlayer}

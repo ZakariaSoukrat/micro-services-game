@@ -42,7 +42,20 @@ pw : pw,
 requests : [],
 coins : 0,
 status : "offline",
-creatures : []
+creatures : [
+	{ name: 'Utopia', attack: 10, defense: 4, stamina: 7, price: 10 },
+	{
+	name: 'Shadowstrike',
+	attack: 11,
+	defense: 3,
+	stamina: 2,
+	price: 7
+	},
+	{ name: 'Thunderclaw', attack: 10, defense: 4, stamina: 7, price: 8 },
+	{ name: 'Blaze', attack: 20, defense: 4, stamina: 7, price: 20 },
+	{ name: 'Gardien', attack: 10, defense: 4, stamina: 7, price: 10 },
+	{ name: 'Serpent', attack: 10, defense: 4, stamina: 7, price: 8 }
+	]
 });
 if (result.acknowledged) {
 res.status(200).json({ message: 'Customer created' });
