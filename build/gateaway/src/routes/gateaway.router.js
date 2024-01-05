@@ -9,5 +9,6 @@ router.post('/login', gateway_controllers_1.login);
 router.post('/joinmatch', gateway_controllers_1.playMatch);
 router.get('/result', gateway_controllers_1.showResult);
 router.get('/Allresults', gateway_controllers_1.showAllResult);
+router.get('/players', gateway_controllers_1.getPlayers);
 module.exports = router;
 //# sourceMappingURL=gateaway.router.js.map

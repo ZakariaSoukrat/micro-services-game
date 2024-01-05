@@ -95,7 +95,7 @@ async function playMatch(req: any, res: any) {
         addCoins()
     }
     else{
-        match["result"] = "Lose"
+        match["result"] = "defeat"
     }
     const result = await db.collection('match').insertOne(match);
       if (result.acknowledged) {

@@ -24,7 +24,7 @@ return res.status(400).json({ message: 'pw is required' });
 const regex = /\w+\@(.+)\.com/
 const match = regex.exec(email);
 if (!match){
-return res.status(400).json({ message: 'emai should be in the format : name@rule.com' });
+return res.status(400).json({ message: 'email should be in the format : name@rule.com' });
 }
 if(match[1] == "player"){
 const existingCustomer = await db.collection('player').findOne({
@@ -34,7 +34,7 @@ email: email.toLowerCase()
 if (existingCustomer) {
 return res.status(400).json({ message: 'player already exists' });
 }
-
+else{
 const result = await db.collection('player').insertOne({
 username : username,
 email: email.toLowerCase(),
@@ -57,12 +57,13 @@ creatures : [
 	{ name: 'Serpent', attack: 10, defense: 4, stamina: 7, price: 8 }
 	]
 });
+
 if (result.acknowledged) {
 res.status(200).json({ message: 'Customer created' });
 } else {
 throw new Error('Customer not created');
 }
-
+}
 }
 if(match[1] == "admin"){
 const existingCustomer = await db.collection('admin').findOne({
@@ -104,11 +105,9 @@ res.status(200).json({ message: 'Customer created' });
 throw new Error('Customer not created');
 }
 
-}
+}}
 
 
-
-}
 catch(error) {
 res.status(500).json({ error: error.toString() });
 }

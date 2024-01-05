@@ -1,0 +1,193 @@
+openapi: 3.0.0
+info:
+  title: Game API- Player 
+  version: 1.0.0
+
+components:
+  schemas:
+    Creature:
+      type: object
+      properties:
+        name:
+          type: string
+        attack:
+          type: number
+        defense:
+          type: number
+        stamina:
+          type: number
+        price:
+          type: number
+paths:
+
+  /playMatch:
+    post:
+      summary: Play a match with creatures
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cr1:
+                  type: string
+                cr2:
+                  type: string
+                cr3:
+                  type: string
+                cr4:
+                  type: string
+                cr5:
+                  type: string
+              required:
+                - cr1
+                - cr2
+                - cr3
+                - cr4
+                - cr5
+      responses:
+        '200':
+          description: Match played successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /getAllResults:
+    get:
+      summary: Get all match results
+      responses:
+        '200':
+          description: List of all matches
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                    # Define the properties of a match result here
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /getResults:
+    get:
+      summary: Get the last match results
+      responses:
+        '200':
+          description: Last match results
+          content:
+            application/json:
+              schema:
+                type: object
+                # Define the properties of the last match result here
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /isAuthenticated:
+    get:
+      summary: Check if user is authenticated
+      responses:
+        '200':
+          description: User is authenticated
+        '401':
+          description: User is not authenticated
+
+  /getPlayer:
+    get:
+      summary: Get player information
+      responses:
+        '200':
+          description: Player information
+          content:
+            application/json:
+              schema:
+                type: object
+                # Define the properties of the player information here
+        '401':
+          description: User is not authenticated
+
+  /getCoins:
+    get:
+      summary: Get player's coins
+      responses:
+        '200':
+          description: Player's coin count
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Coins:
+                    type: number
+        '401':
+          description: User is not authenticated
+
+  /addCoins:
+    post:
+      summary: Add coins to player's account
+      responses:
+        '200':
+          description: Coins updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: User is not authenticated
+
+  /creatures:
+    get:
+      summary: Get player's creatures
+      responses:
+        '200':
+          description: List of player's creatures
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Creatures:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Creature'
+        '401':
+          description: User is not authenticated

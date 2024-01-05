@@ -1,4 +1,4 @@
-import {addCoins, getCoins, getCreatures, getPlayer, isAuthenticated} from "../controllers/player.controller";
+import {addCoins, getCoins, getCreatures, getPlayer, isAuthenticated,getPlayers} from "../controllers/player.controller";
 
 
 const express = require('express');
@@ -13,6 +13,7 @@ router.get('/coins', getCoins);
 router.post('/add_coins', addCoins);
 router.get('/creatures', getCreatures);
 router.get('/player', getPlayer);
+router.get('/players', getPlayers);
 
 
 

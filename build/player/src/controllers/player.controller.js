@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPlayer = exports.getCreatures = exports.addCoins = exports.getCoins = exports.isAuthenticated = void 0;
+exports.getPlayers = exports.getPlayer = exports.getCreatures = exports.addCoins = exports.getCoins = exports.isAuthenticated = void 0;
 async function isAuthenticated(req, res) {
     console.log(req.session);
     console.log(req.session.email);
@@ -12,6 +12,13 @@ async function isAuthenticated(req, res) {
     }
 }
 exports.isAuthenticated = isAuthenticated;
+async function getPlayers(req, res) {
+    const { db } = req.app;
+    const result = await db.collection('player').find({}).toArray();
+    console.log(result);
+    return res.status(200).json(result);
+}
+exports.getPlayers = getPlayers;
 async function getPlayer(req, res) {
     const { db } = req.app;
     const email = req.session.email;

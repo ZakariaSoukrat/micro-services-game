@@ -1,0 +1,25 @@
+openapi: 3.0.0
+info:
+  title: Authentication API
+  version: 1.0.0
+  description: API for user authentication operations
+paths:
+  /createUser:
+    post:
+      summary: Create a new user
+      operationId: createUser
+      responses:
+        '200':
+          description: User created successfully
+        '400':
+          description: Error creating user
+
+  /login:
+    post:
+      summary: User login
+      operationId: login
+      responses:
+        '200':
+          description: User logged in successfully
+        '400':
+          description: Error logging in user

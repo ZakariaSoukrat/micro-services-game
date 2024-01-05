@@ -12,7 +12,7 @@ async function start() {
 
     const app = express();
 
-    const mongo = await MongoClient.connect('mongodb+srv://Game_api:sI3vG3fOUjwDltxr@game.yik52gz.mongodb.net/Yu-gi-oh');
+    const mongo = await MongoClient.connect('mongodb+srv://newData:test123@cluster0.43miro1.mongodb.net/Yu-gi-oh');
 
     await mongo.connect();
 

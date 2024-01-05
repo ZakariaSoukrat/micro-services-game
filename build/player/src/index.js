@@ -12,12 +12,12 @@ const body = require('body-parser');
 async function start() {
     try {
         const app = express();
-        const mongo = await mongodb_1.MongoClient.connect('mongodb+srv://Game_api:sI3vG3fOUjwDltxr@game.yik52gz.mongodb.net/Yu-gi-oh');
+        const mongo = await mongodb_1.MongoClient.connect('mongodb+srv://newData:test123@cluster0.43miro1.mongodb.net/Yu-gi-oh');
         await mongo.connect();
         app.db = mongo.db();
         // body parser
         const store = new MongoDBStore({
-            uri: 'mongodb+srv://Game_api:sI3vG3fOUjwDltxr@game.yik52gz.mongodb.net',
+            uri: 'mongodb+srv://newData:test123@cluster0.43miro1.mongodb.net',
             databaseName: 'Yu-gi-oh',
             collection: 'sessions',
         });

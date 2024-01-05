@@ -7,6 +7,7 @@ const url = "http://localhost:3000/authentification/createUser"; // Replace with
 const data = req.body; // Replace with your data
 
 axios.post(url, data).then((response: AxiosResponse) => {
+    return response
 })
 .catch((error: any) => {
 console.error('Error adding user:', error);
@@ -53,9 +54,15 @@ async function playMatch(req, res) {
         }
 
     async function showAllResult(req, res) {
-        const respone = await axios.get("http://localhost:3005/match/getResults")
+        const respone = await axios.get("http://localhost:3005/match/getAllResults")
         console.log(respone.data)
         return res.status(200).json(respone.data);
         }
+async function getPlayers(req, res) {
+    const respone = await axios.get("http://localhost:3001/player/players")
+    console.log(respone.data)
+    return res.status(200).json(respone.data);
+    }
+    
 
-export{createUser, login,showResult,playMatch,showAllResult}
+export{createUser, login,showResult,playMatch,showAllResult,getPlayers}

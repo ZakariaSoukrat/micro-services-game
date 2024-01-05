@@ -9,5 +9,6 @@ router.get('/coins', player_controller_1.getCoins);
 router.post('/add_coins', player_controller_1.addCoins);
 router.get('/creatures', player_controller_1.getCreatures);
 router.get('/player', player_controller_1.getPlayer);
+router.get('/players', player_controller_1.getPlayers);
 module.exports = router;
 //# sourceMappingURL=player.router.js.map

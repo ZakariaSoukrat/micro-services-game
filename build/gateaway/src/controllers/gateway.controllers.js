@@ -3,13 +3,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.showAllResult = exports.playMatch = exports.showResult = exports.login = exports.createUser = void 0;
+exports.getPlayers = exports.showAllResult = exports.playMatch = exports.showResult = exports.login = exports.createUser = void 0;
 const axios_1 = __importDefault(require("axios"));
 async function createUser(req, res) {
     try {
         const url = "http://localhost:3000/authentification/createUser"; // Replace with your endpoint URL
         const data = req.body; // Replace with your data
         axios_1.default.post(url, data).then((response) => {
+            return response;
         })
             .catch((error) => {
             console.error('Error adding user:', error);
@@ -51,9 +52,15 @@ async function showResult(req, res) {
 }
 exports.showResult = showResult;
 async function showAllResult(req, res) {
-    const respone = await axios_1.default.get("http://localhost:3005/match/getResults");
+    const respone = await axios_1.default.get("http://localhost:3005/match/getAllResults");
     console.log(respone.data);
     return res.status(200).json(respone.data);
 }
 exports.showAllResult = showAllResult;
+async function getPlayers(req, res) {
+    const respone = await axios_1.default.get("http://localhost:3001/player/players");
+    console.log(respone.data);
+    return res.status(200).json(respone.data);
+}
+exports.getPlayers = getPlayers;
 //# sourceMappingURL=gateway.controllers.js.map

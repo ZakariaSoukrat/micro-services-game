@@ -1,0 +1,32 @@
+version: '3.8'
+
+services: 
+
+  gateaway:
+    build:
+      context: ./gateaway
+      dockerfile: Dockerfile
+    ports:
+      - "3010:3010"  
+
+  player:
+    build:
+      context: ./player
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"    
+
+  authentification:
+    build:
+      context: ./athentification
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"   
+
+  match:
+    build:
+      context: ./match
+      dockerfile: Dockerfile
+    ports:
+      - "3005:3005"  
+      

@@ -18,7 +18,7 @@ async function createUser(req, res) {
         const regex = /\w+\@(.+)\.com/;
         const match = regex.exec(email);
         if (!match) {
-            return res.status(400).json({ message: 'emai should be in the format : name@rule.com' });
+            return res.status(400).json({ message: 'email should be in the format : name@rule.com' });
         }
         if (match[1] == "player") {
             const existingCustomer = await db.collection('player').findOne({
@@ -27,33 +27,35 @@ async function createUser(req, res) {
             if (existingCustomer) {
                 return res.status(400).json({ message: 'player already exists' });
             }
-            const result = await db.collection('player').insertOne({
-                username: username,
-                email: email.toLowerCase(),
-                pw: pw,
-                requests: [],
-                coins: 0,
-                status: "offline",
-                creatures: [
-                    { name: 'Utopia', attack: 10, defense: 4, stamina: 7, price: 10 },
-                    {
-                        name: 'Shadowstrike',
-                        attack: 11,
-                        defense: 3,
-                        stamina: 2,
-                        price: 7
-                    },
-                    { name: 'Thunderclaw', attack: 10, defense: 4, stamina: 7, price: 8 },
-                    { name: 'Blaze', attack: 20, defense: 4, stamina: 7, price: 20 },
-                    { name: 'Gardien', attack: 10, defense: 4, stamina: 7, price: 10 },
-                    { name: 'Serpent', attack: 10, defense: 4, stamina: 7, price: 8 }
-                ]
-            });
-            if (result.acknowledged) {
-                res.status(200).json({ message: 'Customer created' });
-            }
             else {
-                throw new Error('Customer not created');
+                const result = await db.collection('player').insertOne({
+                    username: username,
+                    email: email.toLowerCase(),
+                    pw: pw,
+                    requests: [],
+                    coins: 0,
+                    status: "offline",
+                    creatures: [
+                        { name: 'Utopia', attack: 10, defense: 4, stamina: 7, price: 10 },
+                        {
+                            name: 'Shadowstrike',
+                            attack: 11,
+                            defense: 3,
+                            stamina: 2,
+                            price: 7
+                        },
+                        { name: 'Thunderclaw', attack: 10, defense: 4, stamina: 7, price: 8 },
+                        { name: 'Blaze', attack: 20, defense: 4, stamina: 7, price: 20 },
+                        { name: 'Gardien', attack: 10, defense: 4, stamina: 7, price: 10 },
+                        { name: 'Serpent', attack: 10, defense: 4, stamina: 7, price: 8 }
+                    ]
+                });
+                if (result.acknowledged) {
+                    res.status(200).json({ message: 'Customer created' });
+                }
+                else {
+                    throw new Error('Customer not created');
+                }
             }
         }
         if (match[1] == "admin") {

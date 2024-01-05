@@ -10,6 +10,12 @@ res.status(200).send('User is authenticated');
 res.status(401).send('User is not authenticated');
 }
 }
+async function getPlayers(req, res){
+  const { db } = req.app;
+  const result = await db.collection('player').find({}).toArray()
+  console.log(result)
+  return res.status(200).json(result)
+}
 
 async function getPlayer(req, res){
   const { db } = req.app;
@@ -64,4 +70,4 @@ else (res.status(401).send('User is not authenticated'))
 
 
 
-export{isAuthenticated, getCoins, addCoins, getCreatures,getPlayer}
+export{isAuthenticated, getCoins, addCoins, getCreatures,getPlayer,getPlayers}

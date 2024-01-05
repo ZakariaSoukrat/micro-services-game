@@ -1,4 +1,4 @@
-import { createUser, login, playMatch, showResult,showAllResult} from "../controllers/gateway.controllers";
+import { createUser, login, playMatch, showResult,showAllResult,getPlayers} from "../controllers/gateway.controllers";
 
 
 const express = require('express');
@@ -13,6 +13,8 @@ router.post('/login', login);
 router.post('/joinmatch', playMatch);
 router.get('/result', showResult);
 router.get('/Allresults', showAllResult);
+router.get('/players', getPlayers);
+
 
 
 
